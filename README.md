@@ -24,7 +24,7 @@
    ```
     
    ```java
-   MEMOIZED-FIBO (f, n)
+   MEMOIZED-FIBO (n)
 	para i ← 0 até n faça
 	     f [i] ← −1
 	devolva LOOKUP-FIBO (f, n)
