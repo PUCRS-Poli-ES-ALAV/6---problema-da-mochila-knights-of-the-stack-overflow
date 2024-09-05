@@ -1,0 +1,13 @@
+func(n), result, op count;
+fibRec(4), 3, 21;
+fibRec(8), 21, 166;
+fibRec(16), 987, 7981;
+fibRec(32), 2178309, 17622886;
+fib(4), 3, 16;
+fib(8), 21, 32;
+fib(16), 987, 64;
+fib(32), 2178309, 128;
+memoizedFibo(4), 3, 29;
+memoizedFibo(8), 21, 53;
+memoizedFibo(16), 987, 101;
+memoizedFibo(32), 2178309, 197;

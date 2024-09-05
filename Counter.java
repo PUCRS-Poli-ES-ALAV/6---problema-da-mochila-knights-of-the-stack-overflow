@@ -1,3 +1,8 @@
+/**
+ * @author Anderson R. P. Sprenger
+ * @author Vinicius P. Dias
+ */
+
 public class Counter {
     private int count;
 
