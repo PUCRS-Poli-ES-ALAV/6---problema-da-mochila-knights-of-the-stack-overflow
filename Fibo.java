@@ -1,9 +1,12 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+/**
+ * @author Anderson R. P. Sprenger
+ * @author Vinicius P. Dias
+ */
 
-class Main {
+import java.util.ArrayList;
+import java.util.List;
+
+class Fibo {
 
     // FIBO-REC (n)
     //     se n ≤ 1
@@ -14,7 +17,7 @@ class Main {
     //         b ← FIBO-REC (n − 2)
     //         devolva a + b
 
-    public static int fiboRec(int n) {
+    public int fiboRec(int n) {
         if (n <= 1) {
             return n;
         }
@@ -32,19 +35,19 @@ class Main {
     //         f[i] ← f[i-1]+f[i-2]
     //     devolva f [n]
 
-    public static int fibo(int n) {
-        Map<Integer, Integer> f = new HashMap<>();
-        f.put(0, 0);
-        f.put(1, 1);
+    public int fibo(int n) {
+        int [] f = new int[n + 1]; // 0 .. n
+        f[0] = 0;
+        f[1] = 1;
 
-        for (Integer i = 2; i <= n; i++) {
-            Integer a = f.get(i - 1);
-            Integer b = f.get(i - 2);
+        for (int i = 2; i <= n; i++) {
+            int a = f[i - 1];
+            int b = f[i - 2];
 
-            f.put(i, a + b);
+            f[i] = a + b;
         }
 
-        return f.get(n);
+        return f[n];
     }
 
     // MEMOIZED-FIBO (n)
@@ -61,11 +64,36 @@ class Main {
     //         f [n] ← LOOKUP-FIBO(f, n − 1) + LOOKUP-FIBO(f, n − 2)
     //     devolva f [n]
 
+    public int memoizedFibo(int n) {
+        int [] f = new int[n + 1]; // 0 .. n
+
+        for (int i = 0; i < f.length; i++) {
+            f[i] = -1;
+        }
+
+        return lookupFibo(f, n);
+    }
+
+    private int lookupFibo(int[] f, int n) {
+        if (f[n] >= 0) {
+            return f[n];
+        }
+
+        if (n <= 1) {
+            f[n] = n;
+        } else {
+            f[n] = lookupFibo(f, n - 1) + lookupFibo(f, n - 2);
+        }
+
+        return f[n];
+    }
 
 
 
-    public static void main(String[] args) {
+    public void main(String[] args) {
         System.out.println("Hello world!\n");
+
+        Fibo app = new Fibo();
 
         List<Integer> tests = new ArrayList<Integer>();
         tests.add(4);
@@ -75,20 +103,30 @@ class Main {
 
         for (Integer i : tests) {
             long startTime = System.currentTimeMillis();
-            int fib = fiboRec(i.intValue());
+            int fib = app.fiboRec(i);
             long endTime = System.currentTimeMillis();
             long execTime = endTime - startTime;
-            System.out.println("fibRec " + i.intValue() + ", "+ fiboRec(i.intValue()) + ", " + execTime + "ms;");
+            System.out.println("fibRec " + i + ", "+ fib + ", " + execTime + "ms;");
         }
 
         System.out.println("\n");
 
         for (Integer i : tests) {
             long startTime = System.currentTimeMillis();
-            int fib = fiboRec(i.intValue());
+            int fib = app.fibo(i);
             long endTime = System.currentTimeMillis();
             long execTime = endTime - startTime;
-            System.out.println("fib " + i.intValue() + ", "+ fibo(i.intValue()) + ", " + execTime + "ms;");
+            System.out.println("fib " + i + ", "+ fib + ", " + execTime + "ms;");
+        }
+
+        System.out.println("\n");
+
+        for (Integer i : tests) {
+            long startTime = System.currentTimeMillis();
+            int fib = app.memoizedFibo(i);
+            long endTime = System.currentTimeMillis();
+            long execTime = endTime - startTime;
+            System.out.println("memoizedFibo " + i + ", "+ fib + ", " + execTime + "ms;");
         }
     }
 }
